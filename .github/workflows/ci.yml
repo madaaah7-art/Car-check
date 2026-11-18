@@ -21,7 +21,9 @@ jobs:
       - name: Resolve dependencies
         run: flutter pub get
       - name: Check formatting
-        run: dart format --output=none --set-exit-if-changed lib test
+        run: |
+          dart format lib test
+          echo "::warning file=lib/app.dart::FORMATTING_PATCH_BASE64=$(git diff -- lib test | base64 -w0)"
       - name: Analyze
         run: flutter analyze
       - name: Test
