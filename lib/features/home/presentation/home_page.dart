@@ -39,16 +39,23 @@ class HomePage extends StatelessWidget {
               builder: (context, _) => Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(Icons.directions_car_outlined,
-                      size: 64, color: Theme.of(context).colorScheme.primary),
+                  Icon(
+                    Icons.directions_car_outlined,
+                    size: 64,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
                   const SizedBox(height: 16),
-                  Text(strings.welcome,
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.headlineMedium),
+                  Text(
+                    strings.welcome,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.headlineMedium,
+                  ),
                   const SizedBox(height: 12),
-                  Text(strings.foundation,
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.bodyLarge),
+                  Text(
+                    strings.foundation,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
                   const SizedBox(height: 24),
                   if (controller.state == HomeLoadState.loading)
                     const CircularProgressIndicator()
@@ -56,7 +63,10 @@ class HomePage extends StatelessWidget {
                     Text(strings.ready)
                   else ...[
                     Text(strings.failure),
-                    TextButton(onPressed: controller.load, child: Text(strings.retry)),
+                    TextButton(
+                      onPressed: controller.load,
+                      child: Text(strings.retry),
+                    ),
                   ],
                 ],
               ),

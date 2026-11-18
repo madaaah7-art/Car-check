@@ -7,8 +7,10 @@ import 'features/home/presentation/home_controller.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(CarCheckApp(
-    homeController: HomeController(GetAppStatus(InMemoryStatusRepository()))
-      ..load(),
-  ));
+  runApp(
+    CarCheckApp(
+      homeController: HomeController(GetAppStatus(InMemoryStatusRepository()))
+        ..load(),
+    ),
+  );
 }

@@ -30,7 +30,12 @@ jobs:
         run: |
           result=0
           flutter analyze > /tmp/analyze.log 2>&1 || result=$?
-          base64 -w0 /tmp/analyze.log | fold -w 3000 | while read -r part; do echo "::warning file=lib/app.dart::ANALYZE=$part"; done
+          base64 -w0 /tmp/analyze.log | fold -w 3000 | while IFS= read -r part || [ -n "$part" ]; do echo "::warning file=lib/app.dart::ANALYZE=$part"; done
           exit "$result"
       - name: Test
-        run: flutter test
+        if: always()
+        run: |
+          result=0
+          flutter test > /tmp/test.log 2>&1 || result=$?
+          base64 -w0 /tmp/test.log | fold -w 3000 | while IFS= read -r part || [ -n "$part" ]; do echo "::warning file=test/app_test.dart::TEST=$part"; done
+          exit "$result"

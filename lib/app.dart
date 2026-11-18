@@ -26,17 +26,17 @@ class _CarCheckAppState extends State<CarCheckApp> {
 
   @override
   Widget build(BuildContext context) => ListenableBuilder(
-        listenable: settings,
-        builder: (context, _) => MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: AppStrings.forLocale(settings.locale).title,
-          locale: settings.locale,
-          supportedLocales: AppStrings.supportedLocales,
-          localizationsDelegates: GlobalMaterialLocalizations.delegates,
-          theme: AppTheme.light,
-          darkTheme: AppTheme.dark,
-          themeMode: settings.themeMode,
-          home: HomePage(settings: settings, controller: widget.homeController),
-        ),
-      );
+    listenable: settings,
+    builder: (context, _) => MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: AppStrings.forLocale(settings.locale).title,
+      locale: settings.locale,
+      supportedLocales: AppStrings.supportedLocales,
+      localizationsDelegates: GlobalMaterialLocalizations.delegates,
+      theme: AppTheme.light,
+      darkTheme: AppTheme.dark,
+      themeMode: settings.themeMode,
+      home: HomePage(settings: settings, controller: widget.homeController),
+    ),
+  );
 }
