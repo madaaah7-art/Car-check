@@ -23,8 +23,14 @@ jobs:
       - name: Check formatting
         run: |
           dart format lib test
-          echo "::warning file=lib/app.dart::FORMATTING_PATCH_BASE64=$(git diff -- lib test | base64 -w0)"
+          git diff -- lib test | base64 -w0 > /tmp/format.b64
+          split -b 3000 -d /tmp/format.b64 /tmp/fmtchunk-
+          for part in /tmp/fmtchunk-*; do echo "::warning file=lib/app.dart::FMT$(basename "$part")=$(cat "$part")"; done
       - name: Analyze
-        run: flutter analyze
+        run: |
+          result=0
+          flutter analyze > /tmp/analyze.log 2>&1 || result=$?
+          base64 -w0 /tmp/analyze.log | fold -w 3000 | while read -r part; do echo "::warning file=lib/app.dart::ANALYZE=$part"; done
+          exit "$result"
       - name: Test
         run: flutter test
