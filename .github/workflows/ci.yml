@@ -21,21 +21,8 @@ jobs:
       - name: Resolve dependencies
         run: flutter pub get
       - name: Check formatting
-        run: |
-          dart format lib test
-          git diff -- lib test | base64 -w0 > /tmp/format.b64
-          split -b 3000 -d /tmp/format.b64 /tmp/fmtchunk-
-          for part in /tmp/fmtchunk-*; do echo "::warning file=lib/app.dart::FMT$(basename "$part")=$(cat "$part")"; done
+        run: dart format --output=none --set-exit-if-changed lib test
       - name: Analyze
-        run: |
-          result=0
-          flutter analyze > /tmp/analyze.log 2>&1 || result=$?
-          base64 -w0 /tmp/analyze.log | fold -w 3000 | while IFS= read -r part || [ -n "$part" ]; do echo "::warning file=lib/app.dart::ANALYZE=$part"; done
-          exit "$result"
+        run: flutter analyze
       - name: Test
-        if: always()
-        run: |
-          result=0
-          flutter test > /tmp/test.log 2>&1 || result=$?
-          base64 -w0 /tmp/test.log | fold -w 3000 | while IFS= read -r part || [ -n "$part" ]; do echo "::warning file=test/app_test.dart::TEST=$part"; done
-          exit "$result"
+        run: flutter test
